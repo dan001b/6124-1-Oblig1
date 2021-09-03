@@ -52,13 +52,13 @@ public class main extends Application {
         primaryStage.show();
         
         // tegner treet ved oppstart
-        main.this.drawTree(canvas, optionpane.getAngle(), optionpane.getDepth(), optionpane.getWeight());
+        main.this.drawTree(canvas, optionpane.getAngle(), optionpane.getDepth(), optionpane.getWeight(), optionpane.getTrunksize());
         
         // binder handling for tegne knappen
         redraw.setOnAction(e -> {
             canvas.getChildren().removeAll(canvas.getChildren());
-            System.out.println(optionpane.getAngle()+"  :   "+optionpane.getDepth()+"  :   "+optionpane.getWeight());
-            main.this.drawTree(canvas, optionpane.getAngle(), optionpane.getDepth(), optionpane.getWeight());
+            System.out.println(optionpane.getAngle()+"  :   "+optionpane.getDepth()+"  :   "+optionpane.getWeight()+"  :   "+optionpane.getTrunksize());
+            main.this.drawTree(canvas, optionpane.getAngle(), optionpane.getDepth(), optionpane.getWeight(), optionpane.getTrunksize());
         });
     }
 
@@ -72,7 +72,7 @@ public class main extends Application {
      /**
       * rekursiv hjelpemetode
      */
-    public void drawTree(Pane canvas, int xForste, int yForste, double angle, double angleOffset, int depth, double weight) {
+    public void drawTree(Pane canvas, int xForste, int yForste, double angle, double angleOffset, int depth, double weight, double trunkSize) {
         
         // Base case hvis 
         if (depth < 0) {
@@ -82,30 +82,37 @@ public class main extends Application {
         // finner 
         int xAndre = xForste + (int) (Math.cos(Math.toRadians(angle)) * depth * 5);
         int yAndre = yForste + (int) (Math.sin(Math.toRadians(angle)) * depth * 5);
+        
+        //lager 2D linjeobjekt med koordinater
+        Line ln = new Line(xForste, yForste, xAndre, yAndre);
+        
+        //storrelse paa trestamme (tykkelse)
+        if(depth == optionpane.getDepth()) {
+        	ln.setStrokeWidth(trunkSize);
+        }
 
-        canvas.getChildren().addAll(new Line(xForste, yForste, xAndre, yAndre));
+        canvas.getChildren().addAll(ln);
         if (Math.random()>weight){
-            drawTree(canvas, xAndre, yAndre, angle - angleOffset,angleOffset, depth - 1,weight);
+            drawTree(canvas, xAndre, yAndre, angle - angleOffset,angleOffset, depth - 1,weight, trunkSize);
         }
         if (Math.random()>weight){
-            drawTree(canvas, xAndre, yAndre, angle + angleOffset,angleOffset, depth - 1,weight);
+            drawTree(canvas, xAndre, yAndre, angle + angleOffset,angleOffset, depth - 1,weight, trunkSize);
         }
     }
     
     /**
     * Drivermetode
     */
-    public void drawTree(Pane canvas,double angleOffset, int dybde, double weight){
+    public void drawTree(Pane canvas,double angleOffset, int dybde, double weight, double trunkSize){
         
         // treets posisjon basert på størrelse for tegneflate
         int xForste = (int) canvas.getWidth() / 2;
         int yForste = (int) (canvas.getHeight()*0.75);
         
         // kaller hjelpemetoden
-        drawTree(canvas, xForste, yForste, -90, angleOffset, dybde, weight);
+        drawTree(canvas, xForste, yForste, -90, angleOffset, dybde, weight, trunkSize);
         
     }
-    
     
 
 }

@@ -20,6 +20,7 @@ public class OptionPanel extends HBox {
     private Slider angleSlider;
     private Slider depthSlider;
     private Slider probSlider;
+    private Slider trunkSlider;
 
     public OptionPanel() {
 
@@ -35,6 +36,9 @@ public class OptionPanel extends HBox {
         probSlider = new Slider(0, 0.1, 0.01);
         formatSlider(probSlider, 0.01);
         
+        trunkSlider = new Slider(1, 10, 5);
+        formatSlider(trunkSlider, 10);
+        
         // legger til slider i sliderP, dette er gridpane
         // settes ved å oppgi posisjon
         sliderP.add(new Label("Vinkel: "), 0, 0);
@@ -46,6 +50,9 @@ public class OptionPanel extends HBox {
         
         sliderP.add(new Label("Loss: "), 3, 0);
         sliderP.add(probSlider, 4, 0);
+        
+        sliderP.add(new Label("Trunk size:"), 3, 1);
+        sliderP.add(trunkSlider, 4, 1);
 
         getChildren().addAll(sliderP);
 
@@ -73,6 +80,10 @@ public class OptionPanel extends HBox {
     
     public double getWeight() {
         return probSlider.getValue();
+    }
+    
+    public double getTrunksize() {
+    	return trunkSlider.getValue();
     }
 
 }
