@@ -21,7 +21,7 @@ import javafx.stage.Stage;
  * 6124-1 21H Algoritmer og datastrukturer Oblig1-grupper 1
  *
  * @author Mustafa Waleed Alqaisy (studentnummer: 216557)
- * @author Sindre Andreas Olsen Strømnæss
+ * @author Sindre Andreas Olsen Strømnæss (studentnummer: 233595)
  */
 public class RecursiveTree extends Application {
 
